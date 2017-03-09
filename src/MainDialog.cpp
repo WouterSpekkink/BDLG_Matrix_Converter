@@ -103,7 +103,7 @@ void MainDialog::enableOptions() {
 }
 
 void MainDialog::writeMatrix() {
-  QString QsaveFile = QFileDialog::getSaveFileName(this, tr("Export File"),"", tr("sav files (*.csv)"));
+  QString QsaveFile = QFileDialog::getSaveFileName(this, tr("Export File"),"", tr("csv files (*.csv)"));
   if (!QsaveFile.trimmed().isEmpty()) {
     if (!QsaveFile.endsWith(".csv")) {
       QsaveFile.append(".csv");
