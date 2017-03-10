@@ -1,3 +1,28 @@
+/*
+ Copyright 2017 Wouter Spekkink
+ Authors : Wouter Spekkink <wouter.spekkink@gmail.com>
+ Website : http://www.wouterspekkink.org
+
+ This file is part of the BDLG_Matrix_Converter.
+
+ DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+ Copyright 2017 Wouter Spekkink. All rights reserved.
+
+ The BDLF_Matrix_Converter is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ The BDLG_Matrix_Converter is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ #
+ You should have received a copy of the GNU General Public License
+ along with the BDLG_Matrix_Converter.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include <QtGui>
 
 #include "../include/MainDialog.h"
@@ -22,6 +47,10 @@ MainDialog::MainDialog(QWidget *parent) : QDialog(parent) {
   exportLabel = new QLabel(tr("<h3>Export BDLG matrix</h3>"));
   writeMatrixButton = new QPushButton(tr("Export matrix"));
   writeMatrixButton->setEnabled(false);
+  writeNodesButton = new QPushButton(tr("Export node list"));
+  writeNodesButton->setEnabled(false);
+  writeEdgesButton = new QPushButton(tr("Export edge list"));
+  writeEdgesButton->setEnabled(false);
 
   connect(openFile, SIGNAL(clicked()), this, SLOT(getFile()));
   connect(dataInterface, SIGNAL(importFinished()), this, SLOT(enableOptions()));
@@ -31,6 +60,8 @@ MainDialog::MainDialog(QWidget *parent) : QDialog(parent) {
   connect(exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
   connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(finalBusiness()));
   connect(writeMatrixButton, SIGNAL(clicked()), this, SLOT(writeMatrix()));
+  connect(writeNodesButton, SIGNAL(clicked()), this, SLOT(writeNodes()));
+  connect(writeEdgesButton, SIGNAL(clicked()), this, SLOT(writeEdges()));
 
   QPointer<QVBoxLayout> topLayout = new QVBoxLayout;
   topLayout->addWidget(importLabel);
@@ -40,21 +71,28 @@ MainDialog::MainDialog(QWidget *parent) : QDialog(parent) {
   topLayout->addLayout(topLayoutOne);
   topLayout->addWidget(importFile);
 
+  QPointer<QVBoxLayout> middleLayout = new QVBoxLayout;
+  middleLayout->addWidget(writeMatrixButton);
+  middleLayout->addWidget(writeNodesButton);
+  middleLayout->addWidget(writeEdgesButton);
+
   QPointer<QVBoxLayout> lowerLayout = new QVBoxLayout;
-  lowerLayout->addWidget(writeMatrixButton);
   lowerLayout->addWidget(exitButton);
   
-  QPointer<QFrame> horizontalSep = new QFrame();
-  horizontalSep->setFrameShape(QFrame::HLine);
-  
+  QPointer<QFrame> horizontalSepOne = new QFrame();
+  horizontalSepOne->setFrameShape(QFrame::HLine);
+  QPointer<QFrame> horizontalSepTwo = new QFrame();
+  horizontalSepTwo->setFrameShape(QFrame::HLine);
+ 
   QPointer<QVBoxLayout> mainLayout = new QVBoxLayout; 
   mainLayout->addLayout(topLayout);
-  mainLayout->addWidget(horizontalSep);
+  mainLayout->addWidget(horizontalSepOne);
+  mainLayout->addLayout(middleLayout);
+  mainLayout->addWidget(horizontalSepTwo);
   mainLayout->addLayout(lowerLayout);
   setLayout(mainLayout);
   setWindowTitle(tr("Matrix converter"));
   resize(300,100);
-  // And that finishes the constructor.
 }
 
 // Private slots are listed below.
@@ -77,10 +115,14 @@ void MainDialog::getFile() {
     initializeSeps();
     sepSelector->setEnabled(true);
     writeMatrixButton->setEnabled(false);
+    writeNodesButton->setEnabled(false);
+    writeEdgesButton->setEnabled(false);
     importFile->setEnabled(false);
   } else {
     sepSelector->setEnabled(false);
     writeMatrixButton->setEnabled(false);
+    writeNodesButton->setEnabled(false);
+    writeEdgesButton->setEnabled(false);
     importFile->setEnabled(false);
   }
 }
@@ -100,6 +142,8 @@ void MainDialog::readNewData() {
 
 void MainDialog::enableOptions() {
   writeMatrixButton->setEnabled(true);
+  writeNodesButton->setEnabled(true);
+  writeEdgesButton->setEnabled(true);
 }
 
 void MainDialog::writeMatrix() {
@@ -111,6 +155,27 @@ void MainDialog::writeMatrix() {
     dataInterface->writeMatrix(QsaveFile, sep);
   }
 }
+
+void MainDialog::writeNodes() {
+  QString QsaveFile = QFileDialog::getSaveFileName(this, tr("Export File"),"", tr("csv files (*.csv)"));
+  if (!QsaveFile.trimmed().isEmpty()) {
+    if (!QsaveFile.endsWith(".csv")) {
+      QsaveFile.append(".csv");
+    }
+    dataInterface->writeNodes(QsaveFile, sep);
+  }
+}
+
+void MainDialog::writeEdges() {
+  QString QsaveFile = QFileDialog::getSaveFileName(this, tr("Export File"),"", tr("csv files (*.csv)"));
+  if (!QsaveFile.trimmed().isEmpty()) {
+    if (!QsaveFile.endsWith(".csv")) {
+      QsaveFile.append(".csv");
+    }
+    dataInterface->writeEdges(QsaveFile, sep);
+  }
+}
+
 
 void MainDialog::finalBusiness() {
   delete dataInterface;
