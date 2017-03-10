@@ -23,9 +23,6 @@ class MainDialog : public QDialog {
 public:
   MainDialog(QWidget *parent=0);
 
-signals:
-  void writeLog(const QString &entry);					
-					
 private slots:
   void initializeSeps();
   void getFile();
@@ -33,6 +30,8 @@ private slots:
   void readNewData();
   void enableOptions();
   void writeMatrix();
+  void writeNodes();
+  void writeEdges();
   void finalBusiness();
   
 private:
@@ -43,6 +42,8 @@ private:
   QPointer<QPushButton> importFile;
   QPointer<QPushButton> exitButton;
   QPointer<QPushButton> writeMatrixButton;
+  QPointer<QPushButton> writeNodesButton;
+  QPointer<QPushButton> writeEdgesButton;
   QPointer<QComboBox> sepSelector;
   QString fileName;
   QString sep;

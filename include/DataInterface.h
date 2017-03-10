@@ -13,6 +13,8 @@ public:
   DataInterface();
   void readFile(const QString &fileName, const QString &sep);
   void writeMatrix(const QString &fileName, const QString &sep);
+  void writeNodes(const QString &fileName, const QString &sep);
+  void writeEdges(const QString &fileName, const QString &sep);
   ~DataInterface() {}
   
 signals:
@@ -21,6 +23,8 @@ signals:
 private:
   std::vector<std::string> header; 
   std::vector<std::string> rowNames;
-  std::vector<std::vector <short> > rowData; // This will hold the data in the file.
+  std::vector<std::string> labels;
+  std::vector<std::vector <short> > rowData;
+  std::vector<std::vector <short> > newMatrix;
 };
 #endif
