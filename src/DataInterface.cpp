@@ -95,8 +95,23 @@ void DataInterface::readFile(const QString &fileName, const QString &sep)
   for (rIt = rowNames.begin(); rIt != rowNames.end(); rIt++) {
     for (hIt = header.begin(); hIt != header.end(); hIt++) {
       std::string s1 = *rIt;
+      std::string::iterator et;
+      for (et = s1.begin(); et != s1.end();) {
+	if (*et == '"') {
+	  s1.erase(et);
+	} else {
+	  et++;
+	}
+      }
       std::string s2 = *hIt;
-      std::string currentLabel =  s1 + "_" + s2;
+      for (et = s2.begin(); et != s2.end();) {
+	if (*et == '"') {
+	  s2.erase(et);
+	} else {
+	  et++;
+	}
+      }      
+      std::string currentLabel = s1 + char('-') + s2;
       labels.push_back(currentLabel);
     }
   }
@@ -216,7 +231,6 @@ void DataInterface::writeMatrix(const QString &fileName, const QString &sep) {
  
   fileOut.close();
 }
-<<<<<<< HEAD
 
 void DataInterface::writeNodes(const QString &fileName, const QString &sep) {
   std::string saveFile = fileName.toStdString();
@@ -271,62 +285,6 @@ void DataInterface::writeNodes(const QString &fileName, const QString &sep) {
     }
   }
 
-=======
-
-void DataInterface::writeNodes(const QString &fileName, const QString &sep) {
-  std::string saveFile = fileName.toStdString();
-  std::string sepString = sep.toStdString();
-  std::istringstream convert(sepString.c_str());
-  char sepChar;
-  convert >> sepChar;
-
-  std::ofstream fileOut(saveFile.c_str());
-
-  fileOut << "Id" << sepChar << "Label" << sepChar << "Actor" << sepChar
-	  << "Order_Original" << sepChar << "Order_Closed\n";
-
-  // It is easier hear to redo the labelling part and immediately create order variables.
-  // Make the labels for the new matrix.
-  std::vector <std::string> newLabels;
-  std::vector <std::string>::iterator rIt;
-  std::vector <std::string>::iterator hIt;
-  
-  std::vector <std::string> events;
-  std::vector <std::string> actors;
-  std::vector <int> closedOrder;
-  std::string previousEvent = "";
-  // These will include many duplicates, but it is of the same length as the labels vector.
-  for (rIt = rowNames.begin(); rIt != rowNames.end(); rIt++) {
-    int order = 0;
-    for (hIt = header.begin(); hIt != header.end(); hIt++) {
-      if (previousEvent != *hIt) {
-	order++;
-	previousEvent =  *hIt;
-      }
-      closedOrder.push_back(order);
-      events.push_back(*hIt);
-      actors.push_back(*rIt);
-    }
-  }
-
-  // Now we find the nodes that we want to skip when writing the list.
-  std::vector <int> indexes;
-  for (std::vector <std::vector <short> >::size_type i = 0; i != newMatrix.size(); i++) {
-    std::vector <short> currentRow = newMatrix[i];					       
-    int sum = 0;
-    for (std::vector <short>::size_type j = 0; j != currentRow.size(); j++) {
-      if (currentRow[j] == 1) {
-	sum++;
-      }
-    }
-    if (sum > 0) {
-      indexes.push_back(1);
-    } else {
-      indexes.push_back(0);
-    }
-  }
-
->>>>>>> 40c8cca53fe4511e7d9972f34cb271511c2725da
   // Now we write the list.
   for (std::vector <std::string>::size_type i = 0; i != labels.size(); i++) {
     int currentIndex = i;
@@ -336,7 +294,7 @@ void DataInterface::writeNodes(const QString &fileName, const QString &sep) {
 	
     }
   }
-  
+
   fileOut.close();
 }
 
@@ -346,21 +304,11 @@ void DataInterface::writeEdges(const QString &fileName, const QString &sep) {
   std::istringstream convert(sepString.c_str());
   char sepChar;
   convert >> sepChar;
-<<<<<<< HEAD
 
   std::ofstream fileOut(saveFile.c_str());
 
   fileOut << "Source" << sepChar << "Target" << sepChar << "Type"  << sepChar << "Weight\n";
 
-
-=======
-
-  std::ofstream fileOut(saveFile.c_str());
-
-  fileOut << "Source" << sepChar << "Target" << sepChar << "Type"  << sepChar << "Weight\n";
-
-
->>>>>>> 40c8cca53fe4511e7d9972f34cb271511c2725da
   for (std::vector <std::vector <short> >::size_type i = 0; i != newMatrix.size(); i++) {
     std::vector <short> currentRow = newMatrix[i];
     int rowIndex = i;
