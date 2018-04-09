@@ -32,6 +32,9 @@ int main(int argc, char *argv[])
   // Setting up the app
   QApplication MatrixConverter(argc, argv);
 
+  QString version = QString("1.0.0");
+  MatrixConverter.setApplicationVersion(version);
+
   MainDialog *dialog = new MainDialog;
   dialog->show();
   return MatrixConverter.exec();
