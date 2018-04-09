@@ -55,3 +55,10 @@ A quick way to visualise the results is to use the tool to export the node list 
 The program was written in C++, and calls many functions from the Qt5 libraries. Thus, Qt5 must be installed on your system if you wish to build the program yourself. Built versions of the program for Windows and for Linux are available from [my website](http://www.wouterspekkink.org), and from the GitHub repository. 
 
 
+# Citing this software
+If you use this software, please use the following citation in any publications in which the software played a role:
+Spekkink, W. A. H. BLDG Matrix Converter [Computer Software]. DOI: https://doi.org/10.5281/zenodo.1215462
+
+
+[![DOI](https://zenodo.org/badge/84478618.svg)](https://zenodo.org/badge/latestdoi/84478618)
+
