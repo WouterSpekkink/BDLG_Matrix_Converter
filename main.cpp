@@ -25,7 +25,7 @@
 
 
 #include <QApplication>
-#include "../include/MainDialog.h"
+#include "./include/MainDialog.h"
 
 int main(int argc, char *argv[]) 
 {

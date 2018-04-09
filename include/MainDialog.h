@@ -32,6 +32,11 @@
 #include "DataInterface.h"
 #include <vector>
 #include <string>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QHBoxLayout>
 
 class QPushButton;
 class QComboBox;
