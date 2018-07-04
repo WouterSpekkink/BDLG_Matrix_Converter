@@ -203,15 +203,15 @@ void DataInterface::writeMatrix(const QString &fileName, const QString &sep) {
 
   fileOut << sepChar;
   for (std::vector <std::string>::size_type i = 0; i !=  labels.size(); i++) {
-    if (indexes[i] != 0) {
-      if (i != labels.size() - 1) {
+    if (i != labels.size() - 1) {
+      if (indexes[i] != 0) {
 	fileOut << labels[i] << sepChar;
-      } else {
-	fileOut << labels[i] << "\n";
       }
+    } else {
+      fileOut << labels[i] << "\n";
     }
   }
- 
+
   std::vector<std::string>::iterator qIt = labels.begin();
   for (std::vector <std::vector <short> >::size_type i = 0; i != newMatrix.size(); i++) {
     if (indexes[i] != 0) {
@@ -219,18 +219,17 @@ void DataInterface::writeMatrix(const QString &fileName, const QString &sep) {
       std::vector<short> currentRow = newMatrix[i];
       std::vector <short>::iterator it;
       for (std::vector<short>::size_type j = 0; j != currentRow.size(); j++) {
-	if(indexes[j] != 0) {
-	   if (j != currentRow.size() - 1) {
-	     fileOut << currentRow[j] << sepChar;
-	   } else {
-	     fileOut << currentRow[j] << "\n";
-	   }
+	if (j != currentRow.size() - 1) {
+	     if(indexes[j] != 0) {
+	       fileOut << currentRow[j] << sepChar;
+	     }
+	} else {
+	  fileOut << currentRow[j] << "\n";
 	}
       }
     }
     qIt++;
   }
- 
   fileOut.close();
 }
 
