@@ -44,9 +44,7 @@ Based on the ideas outlined above, Wouter Spekkink wrote a simple tool that conv
 The tool can export the matrix itself to a csv-file. In addition, the tool can export a node list and edge list, where the edge list contains the same information as the matrix, whereas the nodes list also includes some variables that indicate, for each node, the event that is part of the node (*Order_Original*), the actor that is part of the node (*Actor*), and the order in which the events occurred (*Order_Closed*). 
 
 # Running the program
-The Windows version of the program can be run by simply opening the application. The Linux version can be run by using the accompanying shell script. It might be necessary to change permissions for the shell script first, by typing the following in the console:
-
-	> sudo chmod+x ./bdlg-matrix.sh
+The Windows version of the program can be run by simply opening the application. The Linux version can be run by using the appimage (just double click it). You may need to first set the appimage to executable. To do this, (1) right-click the appimage, (2) select *Properties*, (3) select the *Permissions* tab, and check *Is executable*.
 
 # Using the program with Gephi
 A quick way to visualise the results is to use the tool to export the node list and edge list, and import these into [Gephi](http://www.gephi.org). Importing of the edge list and node list should be done from Gephi's data laboratory. The user should make sure that the order variables of the node list are imported as numeric variables (doubles are the safest option, but integers should also work in most situations). To make useful plots of the results, the user should make sure to also install the Event Graph Layout (this can be done from within the Plugins menu of Gephi). The user should then select one of the order variables as the order variable for the Event Graph Layout plugin. The *Actor* variable can be used to give nodes colours based on the actors associated with them. This allows one to more easily spot lineages in the graph. 
