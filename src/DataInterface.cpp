@@ -41,6 +41,8 @@ void DataInterface::readFile(const QString &fileName, const QString &sep)
   header.clear();
   rowNames.clear();
   rowData.clear();
+  labels.clear();
+  newMatrix.clear();
 
   const std::string inputFile = fileName.toStdString();
   std::string sepString = sep.toStdString();

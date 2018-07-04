@@ -1,3 +1,4 @@
+
 /*
  Copyright 2017 Wouter Spekkink
  Authors : Wouter Spekkink <wouter.spekkink@gmail.com>
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
   // Setting up the app
   QApplication MatrixConverter(argc, argv);
 
-  QString version = QString("1.0.0");
+  QString version = QString("1.0.1");
   MatrixConverter.setApplicationVersion(version);
 
   MainDialog *dialog = new MainDialog;
